@@ -1,0 +1,6 @@
+name="ocaml-classes"
+version="4.00"
+description="OCaml classes"
+requires=""
+archive(byte) = "stdclass.cma"
+archive(native) = "stdclass.cmxa"

@@ -1,0 +1,114 @@
+  ------------------------------------------------------------------------
+
+O'Caml Class Library
+
+Presentation Distribution Installation Use Comments
+
+  ------------------------------------------------------------------------
+
+Presentation
+
+O'Caml is extended with powerful object-oriented features, a la Smalltalk.
+However, there is an important hardle before using them: i.e. there is no
+support. Object-orientated programming takes its basis on a standardization,
+starting by a common class library.
+
+What is proposed here is by no way a standard, but just an attempt to fill
+this gap, and to demonstrate the object-oriented capacities of O'Caml.
+
+The library is composed of 9 modules, each containing a single class, and
+eventually some creation functions. Each of theses classes corresponds
+almost exactly to a module in the standard library, and only makes it
+object-oriented. Only Ogenlex adds a new feature, indexing on the input
+stream.
+
+   * Oset
+   * Omapping
+   * Omap
+   * Ohashtbl
+   * Ostack
+   * Oqueue
+   * Ostream
+   * Ogenlex
+   * Oformat
+
+Ohashtbl, Ostack, Oqueue, Ostream and Obuffer are simple wrappers. The
+original abstract datatype is the only instance variable of the object, and
+there are as many methods as there were functions in the module. The object
+is identified to the abstract datatype, and provides only an interface to
+it: the instance variable is immutable. Only Ostream leaves the instance
+variable mutable, but this is only to make inheritance easier.
+
+Copying objects created from these classes is meaningless, since the
+internal state will be shared.
+
+Oset and Omap are similar, but you have to chose between a functional and an
+imperative version, while the underlying abstract datatype is functional. In
+the imperative version the state is mutable and adding/removing of
+elements/bindings changes this state. While a functional implementation is
+also available, this way seems more natural if we think of objects as
+individuals. This also allows one to use Omap and Ohashtbl indifferently:
+they have the same methods. To switch from one to the other you just have to
+change object creations. Omapping is a super-class for both functional and
+imperative versions.
+
+Last, Ogenlex presents a different vision, with a very stateful lexer
+object. You create a lexer parameterized with keywords, as in Genlex, and
+afterwards you can dynamically change the input stream, rather than creating
+an individual lexer for each stream. This corresponds to the remark that, in
+most programs, you only need one instance of a lexer, and then can share it.
+
+  ------------------------------------------------------------------------
+
+Distribution
+
+The class library is available for Objective Caml 3.05.
+
+   * O'Caml 3.05 class library
+
+  ------------------------------------------------------------------------
+
+Installation
+
+Just do
+
+     % make
+     % make opt
+
+where you unpacked the distribution.
+
+To install, verify that the first line of the Makefile points to your O'Caml
+library directory, depending on the distribution you are using. Then
+
+     % make install
+
+  ------------------------------------------------------------------------
+
+Use
+
+This is just some ML code. If you want to use it at top level do
+
+     # #load"stdclass.cma";;
+
+or add stdclass.cma at the linking phase in batch compilation.
+
+Object creation is something like
+
+     # let s = new Ostack.c ();;
+     - : '_a Ostack.c = <object>
+
+and you can use methods as you would use function in a module
+
+     # s#push 1;;
+     - : unit = ()
+
+See or browse interface files when needed.
+  ------------------------------------------------------------------------
+
+Bugs and comments to:
+
+     Jacques Garrigue
+     garrigue@kurims.kyoto-u.ac.jp
+
+  ------------------------------------------------------------------------
+Jacques Garrigue, 2002.08.04.

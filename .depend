@@ -1,0 +1,21 @@
+obuffer.cmo: obuffer.cmi
+obuffer.cmx: obuffer.cmi
+oformat.cmo: oformat.cmi
+oformat.cmx: oformat.cmi
+ogenlex.cmo: obuffer.cmi ohashtbl.cmi ostream.cmi ogenlex.cmi
+ogenlex.cmx: obuffer.cmx ohashtbl.cmx ostream.cmx ogenlex.cmi
+ohashtbl.cmo: ohashtbl.cmi
+ohashtbl.cmx: ohashtbl.cmi
+omap.cmo: omap.cmi
+omap.cmx: omap.cmi
+omapping.cmo: omapping.cmi
+omapping.cmx: omapping.cmi
+oqueue.cmo: oqueue.cmi
+oqueue.cmx: oqueue.cmi
+oset.cmo: oset.cmi
+oset.cmx: oset.cmi
+ostack.cmo: ostack.cmi
+ostack.cmx: ostack.cmi
+ostream.cmo: ostream.cmi
+ostream.cmx: ostream.cmi
+ogenlex.cmi: obuffer.cmi ohashtbl.cmi
