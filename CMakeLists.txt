@@ -86,6 +86,9 @@ if(OCaml_BUILD_BYTECODE)
    add_custom_command(OUTPUT ogenlex.cma
                       COMMAND "${OCaml_LIBRARIAN_BYTECODE}" -a -o ogenlex.cma ogenlex.cmo
                       MAIN_DEPENDENCY ogenlex.cmo
+                      DEPENDS "${PROJECT_BINARY_DIR}/obuffer.cmi"
+                              "${PROJECT_BINARY_DIR}/ohashtbl.cmi"
+                              "${PROJECT_BINARY_DIR}/ostream.cmi"
                       WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
                       COMMENT "generation of a bytecode library ..."
                       VERBATIM)
@@ -134,6 +137,9 @@ if(OCaml_BUILD_NATIVE_CODE)
    add_custom_command(OUTPUT ogenlex.cmxa
                       COMMAND "${OCaml_LIBRARIAN_NATIVE}" -a -o ogenlex.cmxa ogenlex.cmx
                       MAIN_DEPENDENCY ogenlex.cmx
+                      DEPENDS "${PROJECT_BINARY_DIR}/obuffer.cmi"
+                              "${PROJECT_BINARY_DIR}/ohashtbl.cmi"
+                              "${PROJECT_BINARY_DIR}/ostream.cmi"
                       WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
                       COMMENT "generation of a native-code library ..."
                       VERBATIM)
