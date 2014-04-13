@@ -95,6 +95,10 @@ if(OCaml_BUILD_BYTECODE)
    add_custom_target(bytecode ALL
                      DEPENDS "${PROJECT_BINARY_DIR}/stdclass.cma"
                              "${PROJECT_BINARY_DIR}/ogenlex.cma")
+   add_custom_target(standard_classes_bytecode
+                     DEPENDS "${PROJECT_BINARY_DIR}/stdclass.cma")
+   add_custom_target(genlex_bytecode
+                     DEPENDS "${PROJECT_BINARY_DIR}/ogenlex.cma")
 endif()
 
 option(OCaml_BUILD_NATIVE_CODE "Should native code be generated for OCaml source files?" ON)
@@ -146,4 +150,8 @@ if(OCaml_BUILD_NATIVE_CODE)
    add_custom_target(native ALL
                      DEPENDS "${PROJECT_BINARY_DIR}/stdclass.cmxa"
                              "${PROJECT_BINARY_DIR}/ogenlex.cmxa")
+   add_custom_target(standard_classes_native
+                     DEPENDS "${PROJECT_BINARY_DIR}/stdclass.cmxa")
+   add_custom_target(genlex_native
+                     DEPENDS "${PROJECT_BINARY_DIR}/ogenlex.cmxa")
 endif()
