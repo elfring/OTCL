@@ -29,17 +29,17 @@ set(my_base_modules
 
 foreach(name ${my_base_modules} ogenlex)
    add_custom_command(OUTPUT ${name}.ml
-                      COMMAND "$(CMAKE_COMMAND)" -E copy "${PROJECT_SOURCE_DIR}/${name}.ml" "${PROJECT_BINARY_DIR}/${name}.ml"
+                      COMMAND "${CMAKE_COMMAND}" -E copy "${PROJECT_SOURCE_DIR}/${name}.ml" "${PROJECT_BINARY_DIR}/${name}.ml"
                       MAIN_DEPENDENCY "${PROJECT_SOURCE_DIR}/${name}.ml"
                       COMMENT "copy the source file for \"${name}\" to the build directory"
                       VERBATIM)
    add_custom_command(OUTPUT ${name}.mli
-                      COMMAND "$(CMAKE_COMMAND)" -E copy "${PROJECT_SOURCE_DIR}/${name}.mli" "${PROJECT_BINARY_DIR}/${name}.mli"
+                      COMMAND "${CMAKE_COMMAND}" -E copy "${PROJECT_SOURCE_DIR}/${name}.mli" "${PROJECT_BINARY_DIR}/${name}.mli"
                       MAIN_DEPENDENCY "${PROJECT_SOURCE_DIR}/${name}.mli"
                       COMMENT "copy the interface file for \"${name}\" to the build directory"
                       VERBATIM)
    add_custom_command(OUTPUT ${name}.cmi
-                      COMMAND "$(OCaml_COMPILER_INTERFACE)" ${name}.mli
+                      COMMAND "${OCaml_COMPILER_INTERFACE}" ${name}.mli
                       MAIN_DEPENDENCY "${PROJECT_BINARY_DIR}/${name}.mli"
                       WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
                       COMMENT "compilation for interface file of ${name}"
