@@ -62,6 +62,7 @@ if(OCaml_BUILD_BYTECODE)
       add_custom_command(OUTPUT "${my_part}"
                          COMMAND "${OCaml_COMPILER_BYTECODE}" -c ${name}.ml
                          MAIN_DEPENDENCY "${PROJECT_BINARY_DIR}/${name}.ml"
+                         DEPENDS "${PROJECT_BINARY_DIR}/${name}.cmi"
                          WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
                          COMMENT "compilation for ${name} ..."
                          VERBATIM)
@@ -70,6 +71,7 @@ if(OCaml_BUILD_BYTECODE)
    add_custom_command(OUTPUT ogenlex.cmo
                       COMMAND "${OCaml_COMPILER_BYTECODE}" -c -pp camlp4o ogenlex.ml
                       MAIN_DEPENDENCY "${PROJECT_BINARY_DIR}/ogenlex.ml"
+                      DEPENDS "${PROJECT_BINARY_DIR}/ogenlex.cmi"
                       WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
                       COMMENT "compilation ..."
                       VERBATIM)
@@ -117,6 +119,7 @@ if(OCaml_BUILD_NATIVE_CODE)
       add_custom_command(OUTPUT "${my_part}"
                          COMMAND "${OCaml_COMPILER_NATIVE}" -c ${name}.ml
                          MAIN_DEPENDENCY "${PROJECT_BINARY_DIR}/${name}.ml"
+                         DEPENDS "${PROJECT_BINARY_DIR}/${name}.cmi"
                          WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
                          COMMENT "compilation for ${name} ..."
                          VERBATIM)
@@ -125,6 +128,7 @@ if(OCaml_BUILD_NATIVE_CODE)
    add_custom_command(OUTPUT ogenlex.cmx
                       COMMAND "${OCaml_COMPILER_NATIVE}" -c -pp camlp4o ogenlex.ml
                       MAIN_DEPENDENCY "${PROJECT_BINARY_DIR}/ogenlex.ml"
+                      DEPENDS "${PROJECT_BINARY_DIR}/ogenlex.cmi"
                       WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
                       COMMENT "compilation ..."
                       VERBATIM)
