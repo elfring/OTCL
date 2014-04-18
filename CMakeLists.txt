@@ -15,7 +15,7 @@ set(OCaml_template_class_library_VERSION_MAJOR 1)
 set(OCaml_template_class_library_VERSION_MINOR 0)
 set(OCaml_template_class_library_VERSION_PATCH 0)
 
-set(OCaml_COMPILER_INTERFACE "ocamlopt.opt" CACHE PATH
+set(OCaml_COMPILER_INTERFACE "ocamlopt.opt" CACHE FILEPATH
     "Which tool should compile an interface file for an OCaml module?")
 set(my_base_modules
     obuffer
@@ -49,7 +49,7 @@ endforeach()
 option(OCaml_BUILD_BYTECODE "Should bytecode be generated for OCaml source files?" ON)
 
 if(OCaml_BUILD_BYTECODE)
-   set(OCaml_COMPILER_BYTECODE "ocamlc.opt" CACHE PATH
+   set(OCaml_COMPILER_BYTECODE "ocamlc.opt" CACHE FILEPATH
        "Which tool should compile an OCaml source file to a bytecode format?")
 
    set(my_parts "")
@@ -76,7 +76,7 @@ if(OCaml_BUILD_BYTECODE)
                       COMMENT "compilation ..."
                       VERBATIM)
 
-   set(OCaml_LIBRARIAN_BYTECODE "ocamlc.opt" CACHE PATH
+   set(OCaml_LIBRARIAN_BYTECODE "ocamlc.opt" CACHE FILEPATH
        "Which tool should generate a library from OCaml modules in bytecode format?")
 
    add_custom_command(OUTPUT stdclass.cma
@@ -106,7 +106,7 @@ endif()
 option(OCaml_BUILD_NATIVE_CODE "Should native code be generated for OCaml source files?" ON)
 
 if(OCaml_BUILD_NATIVE_CODE)
-   set(OCaml_COMPILER_NATIVE "ocamlopt.opt" CACHE PATH
+   set(OCaml_COMPILER_NATIVE "ocamlopt.opt" CACHE FILEPATH
        "Which tool should compile an OCaml source file to a native-code format?")
 
    set(my_parts "")
@@ -133,7 +133,7 @@ if(OCaml_BUILD_NATIVE_CODE)
                       COMMENT "compilation ..."
                       VERBATIM)
 
-   set(OCaml_LIBRARIAN_NATIVE "ocamlopt.opt" CACHE PATH
+   set(OCaml_LIBRARIAN_NATIVE "ocamlopt.opt" CACHE FILEPATH
        "Which tool should generate a library from OCaml modules in native-code format?")
 
    add_custom_command(OUTPUT stdclass.cmxa
