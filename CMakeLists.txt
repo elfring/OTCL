@@ -10,9 +10,10 @@ else()
 endif()
 
 project(OCaml_template_class_library NONE)
+set(my_project_description "A template class library for popular data structures in the OCaml programming language")
 
 set(OCaml_template_class_library_VERSION_MAJOR 1)
-set(OCaml_template_class_library_VERSION_MINOR 0)
+set(OCaml_template_class_library_VERSION_MINOR 1)
 set(OCaml_template_class_library_VERSION_PATCH 0)
 
 set(OCaml_COMPILER_INTERFACE "ocamlopt.opt" CACHE FILEPATH
@@ -158,4 +159,92 @@ if(OCaml_BUILD_NATIVE_CODE)
                      DEPENDS "${PROJECT_BINARY_DIR}/stdclass.cmxa")
    add_custom_target(genlex_native
                      DEPENDS "${PROJECT_BINARY_DIR}/ogenlex.cmxa")
+endif()
+
+option(OCaml_template_class_library_BUILD_INSTALLATION
+       "Should installation packages be generated?" ON)
+
+if(OCaml_template_class_library_BUILD_INSTALLATION)
+   if(NOT (OCaml_BUILD_BYTECODE OR OCaml_BUILD_NATIVE_CODE))
+      message(FATAL_ERROR "At least one code generation format should be selected.")
+   endif()
+
+   if(CMAKE_BUILD_TYPE STREQUAL "")
+      set(OCaml_template_class_library_INSTALL_BUILD_TYPE "/empty")
+   else()
+      set(OCaml_template_class_library_INSTALL_BUILD_TYPE "/${CMAKE_BUILD_TYPE}")
+   endif()
+
+   set(OCaml_template_class_library_INSTALL_GENERATION_ID XYZ CACHE STRING
+       "This setting should identify the tool chain that produced the installable files.
+It is a kind of hash for the complete generation process.")
+   set(OCaml_template_class_library_INSTALL_COMMON_SUBDIR
+       "${CMAKE_PROJECT_NAME}${OCaml_template_class_library_INSTALL_BUILD_TYPE}/${OCaml_template_class_library_INSTALL_GENERATION_ID}"
+       CACHE STRING
+       "This setting specifies the unique name for an installable build configuration.")
+   set(OCaml_template_class_library_INSTALL_SHARED_LIB_DIR "lib/${OCaml_template_class_library_INSTALL_COMMON_SUBDIR}"
+       CACHE PATH
+       "Installation directory for shared libraries")
+
+   if(OCaml_BUILD_BYTECODE)
+      set(my_archive "archive(byte)=\"stdclass.cma\"")
+   endif()
+
+   if(OCaml_BUILD_NATIVE_CODE)
+      set(my_archive "${my_archive}
+archive(native)=\"stdclass.cmxa\"")
+   endif()
+
+   configure_file("${PROJECT_SOURCE_DIR}/META.in" "${PROJECT_BINARY_DIR}/META")
+
+   set(my_parts "")
+
+   foreach(name ${my_base_modules})
+      list(APPEND my_parts "${PROJECT_BINARY_DIR}/${name}.cmi")
+   endforeach()
+
+   if(OCaml_BUILD_BYTECODE)
+      install(FILES "${PROJECT_BINARY_DIR}/stdclass.cma"
+                    "${PROJECT_BINARY_DIR}/META"
+                    ${my_parts}
+              DESTINATION "${OCaml_template_class_library_INSTALL_SHARED_LIB_DIR}"
+              COMPONENT standard_classes)
+      install(FILES "${PROJECT_BINARY_DIR}/ogenlex.cma"
+                    "${PROJECT_BINARY_DIR}/ogenlex.cmi"
+              DESTINATION "${OCaml_template_class_library_INSTALL_SHARED_LIB_DIR}"
+              COMPONENT utility)
+   endif()
+
+   if(OCaml_BUILD_NATIVE_CODE)
+      install(FILES "${PROJECT_BINARY_DIR}/stdclass.cmxa"
+                    "${PROJECT_BINARY_DIR}/META"
+                    ${my_parts}
+              DESTINATION "${OCaml_template_class_library_INSTALL_SHARED_LIB_DIR}"
+              COMPONENT standard_classes)
+      install(FILES "${PROJECT_BINARY_DIR}/ogenlex.cmxa"
+                    "${PROJECT_BINARY_DIR}/ogenlex.cmi"
+              DESTINATION "${OCaml_template_class_library_INSTALL_SHARED_LIB_DIR}"
+              COMPONENT utility)
+   endif()
+
+   set(CPACK_COMPONENTS_ALL standard_classes utility)
+   set(CPACK_COMPONENT_STANDARD_CLASSES_DISPLAY_NAME "Standard classes")
+   set(CPACK_COMPONENT_STANDARD_CLASSES_DESCRIPTION
+       "Class library for the support of basic data structures")
+   set(CPACK_COMPONENT_STANDARD_CLASSES_REQUIRED ON)
+   set(CPACK_COMPONENT_STANDARD_CLASSES_INSTALL_TYPES basic complete)
+   set(CPACK_COMPONENT_UTILITY_DISPLAY_NAME Utilities)
+   set(CPACK_COMPONENT_UTILITY_DESCRIPTION "Tools that reuse the class library")
+   set(CPACK_COMPONENT_UTILITY_INSTALL_TYPES complete)
+   set(CPACK_COMPONENT_UTILITY_DEPENDS standard_classes)
+
+   set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
+   set(CPACK_DEB_COMPONENT_INSTALL ON)
+   set(CPACK_RPM_COMPONENT_INSTALL ON)
+
+   set(CPACK_ALL_INSTALL_TYPES basic complete)
+   set(CPACK_INSTALL_TYPE_BASIC_NAME "Basic installation")
+   set(CPACK_INSTALL_TYPE_COMPLETE_NAME "Complete installation")
+
+   include("package_settings.cmake")
 endif()

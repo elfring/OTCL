@@ -1,0 +1,5 @@
+name="@CMAKE_PROJECT_NAME@"
+version="@OCaml_template_class_library_VERSION_MAJOR@.@OCaml_template_class_library_VERSION_MINOR@.@OCaml_template_class_library_VERSION_PATCH@"
+description="@my_project_description@"
+requires=""
+@my_archive@
