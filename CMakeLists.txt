@@ -13,7 +13,7 @@ project(OCaml_template_class_library NONE)
 set(my_project_description "A template class library for popular data structures in the OCaml programming language")
 
 set(OCaml_template_class_library_VERSION_MAJOR 1)
-set(OCaml_template_class_library_VERSION_MINOR 1)
+set(OCaml_template_class_library_VERSION_MINOR 2)
 set(OCaml_template_class_library_VERSION_PATCH 0)
 
 set(OCaml_COMPILER_INTERFACE "ocamlopt.opt" CACHE FILEPATH
@@ -194,6 +194,8 @@ It is a kind of hash for the complete generation process.")
       set(my_archive "${my_archive}
 archive(native)=\"stdclass.cmxa\"")
    endif()
+
+   set(OCAML_VERSION_MINIMUM "3.05")
 
    configure_file("${PROJECT_SOURCE_DIR}/META.in" "${PROJECT_BINARY_DIR}/META")
 
