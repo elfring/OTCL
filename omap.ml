@@ -63,7 +63,7 @@ let rec add ~cmp x data = function
     Empty ->
       Node(Empty, x, data, Empty, 1)
   | Node(l, v, d, r, h) ->
-      let c = compare x v in
+      let c = cmp x v in
       if c = 0 then
         Node(l, x, data, r, h)
       else if c < 0 then
@@ -75,7 +75,7 @@ let rec find ~cmp x = function
     Empty ->
       raise Not_found
   | Node(l, v, d, r, _) ->
-      let c = compare x v in
+      let c = cmp x v in
       if c = 0 then d
       else find ~cmp x (if c < 0 then l else r)
 
@@ -83,7 +83,7 @@ let rec mem ~cmp x = function
     Empty ->
       false
   | Node(l, v, d, r, _) ->
-      let c = compare x v in
+      let c = cmp x v in
       c = 0 || mem ~cmp x (if c < 0 then l else r)
 
 let rec merge t1 t2 =
@@ -97,7 +97,7 @@ let rec remove ~cmp x = function
     Empty ->
       Empty
   | Node(l, v, d, r, h) ->
-      let c = compare x v in
+      let c = cmp x v in
       if c = 0 then
         merge l r
       else if c < 0 then
