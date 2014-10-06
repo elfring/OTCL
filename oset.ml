@@ -106,7 +106,7 @@ module Set =
         Empty ->
           (Empty, None, Empty)
       | Node(l, v, r, _) ->
-          let c = compare x v in
+          let c = cmp x v in
           if c = 0 then (l, Some v, r)
           else if c < 0 then
             let (ll, vl, rl) = split ~cmp x l in (ll, vl, join rl v r)
